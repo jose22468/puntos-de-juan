@@ -1,0 +1,26 @@
+flowchart TD
+    A[Inicio] --> B[Leer tokens de entrada]
+    B --> C{¿Hay entrada?}
+    C -- No --> Z[Fin]
+    C -- Sí --> D[p=0, consultas_heap=[]]
+    D --> E[Procesar tokens hasta '#']
+    E --> F{token == '#'?}
+    F -- Sí --> G[p++ y salir del registro]
+    F -- No --> H{token == 'Register'?}
+    H -- Sí --> I[Leer qid y periodo]
+    I --> J[Agregar (periodo,qid,periodo) al heap]
+    J --> E
+    H -- No --> K[p++]
+    K --> E
+    G --> L[heapify(consultas_heap)]
+    L --> M{¿Queda token para k?}
+    M -- No --> Z
+    M -- Sí --> N[Leer k_ejecuciones]
+    N --> O[Repetir k veces]
+    O --> P[pop mínimo (tiempo,qid,periodo)]
+    P --> Q[Guardar qid en resultados]
+    Q --> R[Calcular próximo tiempo y push]
+    R --> S{¿faltan iteraciones?}
+    S -- Sí --> O
+    S -- No --> T[Imprimir resultados]
+    T --> Z

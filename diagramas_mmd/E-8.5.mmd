@@ -1,0 +1,27 @@
+flowchart TD
+    A[Inicio] --> B[Leer toda la entrada y separar tokens]
+    B --> C{¿Hay entrada?}
+    C -- No --> Z[Fin]
+    C -- Sí --> D[Leer n y cadena s]
+    D --> E[es_valido = True]
+    E --> F[Recorrer i=0..n-2]
+    F --> G{¿s[i]=='1' y s[i+1]=='1'?}
+    G -- Sí --> H[es_valido = False y salir del ciclo]
+    G -- No --> I[Continuar]
+    I --> J{¿Termina ciclo?}
+    H --> K
+    J -- No --> F
+    J -- Sí --> K{¿es_valido?}
+    K -- No --> N[Imprimir No]
+    K -- Sí --> L[Recorrer i=0..n-1 buscando '0']
+    L --> M{¿s[i]=='0' y ambos vecinos son '0' o borde libre?}
+    M -- Sí --> O[es_valido=False y salir]
+    M -- No --> P[Continuar]
+    P --> Q{¿Termina ciclo?}
+    O --> R{¿es_valido?}
+    Q -- No --> L
+    Q -- Sí --> R
+    R -- Sí --> S[Imprimir Yes]
+    R -- No --> N
+    S --> Z
+    N --> Z

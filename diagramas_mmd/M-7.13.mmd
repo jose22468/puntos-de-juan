@@ -1,0 +1,19 @@
+flowchart TD
+    A[Inicio] --> B[Leer entrada: n y acciones]
+    B --> C{¿Hay entrada?}
+    C -- No --> Z[Fin]
+    C -- Sí --> D[Inicializar hotel[10]=0 y p=0]
+    D --> E{¿p < n?}
+    E -- No --> F[Construir string resultado]
+    F --> G[Imprimir resultado]
+    G --> Z
+    E -- Sí --> H[accion = acciones[p]]
+    H --> I{¿accion == 'L'?}
+    I -- Sí --> J[Buscar habitación libre de 0 a 9 y ocuparla]
+    J --> N[p += 1]
+    I -- No --> K{¿accion == 'R'?}
+    K -- Sí --> L[Buscar libre de 9 a 0 y ocuparla]
+    L --> N
+    K -- No --> M[Liberar habitación indicada por dígito]
+    M --> N
+    N --> E
