@@ -1,0 +1,21 @@
+flowchart TD
+    A[Inicio] --> B[Leer tokens]
+    B --> C{¿Hay entrada?}
+    C -- No --> Z[Fin]
+    C -- Sí --> D[Leer n]
+    D --> E[salud=0, tomadas=0, heap malas=[]]
+    E --> F[Repetir para cada poción]
+    F --> G[Leer valor]
+    G --> H[salud += valor; tomadas += 1]
+    H --> I{¿valor < 0?}
+    I -- Sí --> J[push valor en heap malas]
+    I -- No --> K
+    J --> K{¿salud < 0?}
+    K -- Sí --> L[pop peor_pocion (más negativa)]
+    L --> M[salud -= peor_pocion]
+    M --> N[tomadas -= 1]
+    N --> O
+    K -- No --> O{¿quedan pociones?}
+    O -- Sí --> F
+    O -- No --> P[Imprimir tomadas]
+    P --> Z
