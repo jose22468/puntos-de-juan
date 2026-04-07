@@ -1,0 +1,76 @@
+{\rtf1\ansi\deff0
+{\fonttbl{\f0 Calibri;}}
+\fs24
+\b Diagramas de flujo (versión para Word)\b0\par
+\par
+Este archivo está en formato RTF para abrirse directamente en Microsoft Word.\par
+\par
+\b 1) E - 8.5 (1).py\b0\par
+Inicio -> Leer entrada -> ¿Hay entrada?\par
+- No -> Fin\par
+- Sí -> Leer n y cadena s -> Validar que no existan "11" consecutivos\par
+  -> Si existe "11" -> Imprimir No -> Fin\par
+  -> Si no existe "11" -> Revisar cada "0"\par
+     -> ¿Tiene vecinos libres en ambos lados?\par
+        - Sí -> Imprimir No -> Fin\par
+        - No -> Continuar\par
+Final: Imprimir Yes\par
+\par
+\b 2) F - 8.6 (1).py\b0\par
+Inicio -> Leer tokens -> ¿Hay entrada?\par
+- No -> Fin\par
+- Sí -> Registrar consultas hasta "#"\par
+  -> Crear heap por tiempo de ejecución\par
+  -> Leer k (cantidad de ejecuciones)\par
+  -> Repetir k veces:\par
+     1) Extraer consulta con menor tiempo\par
+     2) Guardar qid en resultados\par
+     3) Reinsertar con tiempo + periodo\par
+Final: Imprimir qid resultantes\par
+\par
+\b 3) G - 8.7 (1).py\b0\par
+Inicio -> Leer n -> salud=0, tomadas=0, heap_malas=[]\par
+Para cada poción:\par
+1) salud += valor\par
+2) tomadas += 1\par
+3) Si valor < 0, guardar en heap_malas\par
+4) Si salud < 0, eliminar la peor poción negativa y ajustar salud/tomadas\par
+Final: Imprimir cantidad de pociones tomadas\par
+\par
+\b 4) M - 7.13 (1).py\b0\par
+Inicio -> Leer n y acciones -> hotel[10]=0\par
+Para cada acción:\par
+- 'L': ocupar primera habitación libre de izquierda a derecha\par
+- 'R': ocupar primera habitación libre de derecha a izquierda\par
+- dígito: liberar esa habitación\par
+Final: Imprimir estado final del hotel (10 dígitos)\par
+\par
+\b 5) O - 8.15 (1).py\b0\par
+Inicio -> Leer casos por token n\par
+Mientras n != 0:\par
+1) Leer n números\par
+2) heapify\par
+3) Mientras haya más de un número:\par
+   - Extraer dos mínimos\par
+   - Sumarlos y acumular costo\par
+   - Reinsertar la suma\par
+4) Guardar costo del caso\par
+Final: Imprimir costos de todos los casos\par
+\par
+\b 6) P - 8.16 (1).py\b0\par
+Inicio -> Leer t casos\par
+Para cada caso:\par
+1) Crear arreglo resultado de tamaño n\par
+2) Heap de segmentos (inicia con todo el rango)\par
+3) Para i=1..n:\par
+   - Extraer segmento más largo (y más a la izquierda)\par
+   - Calcular posición media\par
+   - Asignar i en esa posición\par
+   - Insertar subsegmentos izquierdo y derecho si existen\par
+4) Guardar resultado del caso\par
+Final: Imprimir resultados\par
+\par
+\b Sugerencia para Word\b0\par
+En Word, puedes convertir cada bloque en SmartArt:\par
+Insertar -> SmartArt -> Proceso, y copiar cada secuencia.\par
+}
