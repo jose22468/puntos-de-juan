@@ -1,0 +1,21 @@
+flowchart TD
+    A[Inicio] --> B[Crear generador de tokens]
+    B --> C[Inicializar lista salida]
+    C --> D[Intentar leer n]
+    D --> E{¿Fin de tokens (StopIteration)?}
+    E -- Sí --> Z[Terminar ciclo principal]
+    E -- No --> F{¿n == 0?}
+    F -- Sí --> Z
+    F -- No --> G[Leer n números en lista]
+    G --> H[heapify(numeros)]
+    H --> I[costo_total=0]
+    I --> J{¿len(numeros) > 1?}
+    J -- No --> K[Agregar costo_total a salida]
+    K --> D
+    J -- Sí --> L[pop primero y segundo]
+    L --> M[suma = primero + segundo]
+    M --> N[costo_total += suma]
+    N --> O[push suma al heap]
+    O --> J
+    Z --> P[Imprimir salida unida por saltos de línea]
+    P --> Q[Fin]

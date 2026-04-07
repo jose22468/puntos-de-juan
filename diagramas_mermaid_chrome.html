@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Diagramas Mermaid (descarga PNG)</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 24px; line-height: 1.4; }
+    h1 { margin-bottom: 8px; }
+    .hint { color: #444; margin-bottom: 20px; }
+    .card { border: 1px solid #ddd; border-radius: 10px; padding: 14px; margin: 16px 0; }
+    .top { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+    button { border: 0; border-radius: 8px; padding: 8px 12px; cursor: pointer; background: #1f6feb; color: #fff; }
+    button:hover { background: #1558b0; }
+    .mermaid { overflow-x: auto; background: #fff; }
+    .status { font-size: 12px; color: #666; margin-top: 8px; }
+  </style>
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true, securityLevel: 'loose', theme: 'default' });
+
+    function svgToPngDataUrl(svgElement, scale = 2) {
+      return new Promise((resolve, reject) => {
+        const svgData = new XMLSerializer().serializeToString(svgElement);
+        const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+        const url = URL.createObjectURL(svgBlob);
+
+        const img = new Image();
+        img.onload = () => {
+          const w = img.naturalWidth || 1200;
+          const h = img.naturalHeight || 800;
+          const canvas = document.createElement('canvas');
+          canvas.width = w * scale;
+          canvas.height = h * scale;
+          const ctx = canvas.getContext('2d');
+          ctx.fillStyle = '#ffffff';
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+          ctx.scale(scale, scale);
+          ctx.drawImage(img, 0, 0);
+          URL.revokeObjectURL(url);
+          resolve(canvas.toDataURL('image/png'));
+        };
+        img.onerror = reject;
+        img.src = url;
+      });
+    }
+
+    window.downloadDiagram = async function(cardId, fileName) {
+      const card = document.getElementById(cardId);
+      const status = card.querySelector('.status');
+      const svg = card.querySelector('svg');
+      if (!svg) {
+        status.textContent = 'Aún no se renderiza el diagrama. Espera 1-2 segundos y vuelve a intentar.';
+        return;
+      }
+      try {
+        status.textContent = 'Generando PNG...';
+        const dataUrl = await svgToPngDataUrl(svg, 2);
+        const a = document.createElement('a');
+        a.href = dataUrl;
+        a.download = fileName;
+        a.click();
+        status.textContent = 'PNG descargado.';
+      } catch (e) {
+        status.textContent = 'No se pudo generar PNG en este navegador.';
+      }
+    };
+  </script>
+</head>
+<body>
+  <h1>Diagramas de flujo en Mermaid (para Chrome)</h1>
+  <p class="hint">Abre este archivo en Chrome y usa <b>Descargar PNG</b> en cada bloque.</p>
+
+  <div class="card" id="diag-e">
+    <div class="top"><h3>E - 8.5 (1).py</h3><button onclick="downloadDiagram('diag-e','E-8.5.png')">Descargar PNG</button></div>
+    <pre class="mermaid">flowchart TD
+A[Inicio] --> B[Leer entrada y separar tokens]
+B --> C{¿Hay entrada?}
+C -- No --> Z[Fin]
+C -- Sí --> D[Leer n y cadena s]
+D --> E[es_valido = True]
+E --> F[Recorrer i=0..n-2]
+F --> G{¿s[i]=='1' y s[i+1]=='1'?}
+G -- Sí --> H[es_valido=False y salir]
+G -- No --> I[Continuar]
+I --> J{¿Termina ciclo?}
+H --> K
+J -- No --> F
+J -- Sí --> K{¿es_valido?}
+K -- No --> N[Imprimir No]
+K -- Sí --> L[Revisar cada 0]
+L --> M{¿Vecinos libres?}
+M -- Sí --> O[es_valido=False]
+M -- No --> P[Continuar]
+P --> Q{¿Termina ciclo?}
+O --> R{¿es_valido?}
+Q -- No --> L
+Q -- Sí --> R
+R -- Sí --> S[Imprimir Yes]
+R -- No --> N
+S --> Z
+N --> Z</pre>
+    <div class="status"></div>
+  </div>
+
+  <div class="card" id="diag-f">
+    <div class="top"><h3>F - 8.6 (1).py</h3><button onclick="downloadDiagram('diag-f','F-8.6.png')">Descargar PNG</button></div>
+    <pre class="mermaid">flowchart TD
+A[Inicio] --> B[Leer tokens]
+B --> C{¿Hay entrada?}
+C -- No --> Z[Fin]
+C -- Sí --> D[p=0, heap=[]]
+D --> E[Registrar consultas hasta '#']
+E --> F{¿token '#'?}
+F -- Sí --> G[heapify]
+F -- No --> H{¿Register?}
+H -- Sí --> I[Agregar (periodo,qid,periodo)]
+I --> E
+H -- No --> E
+G --> J[Leer k]
+J --> K[Repetir k veces]
+K --> L[pop mínimo]
+L --> M[Guardar qid]
+M --> N[push con próximo tiempo]
+N --> O{¿faltan iteraciones?}
+O -- Sí --> K
+O -- No --> P[Imprimir resultados]
+P --> Z</pre>
+    <div class="status"></div>
+  </div>
+
+  <div class="card" id="diag-g">
+    <div class="top"><h3>G - 8.7 (1).py</h3><button onclick="downloadDiagram('diag-g','G-8.7.png')">Descargar PNG</button></div>
+    <pre class="mermaid">flowchart TD
+A[Inicio] --> B[Leer n]
+B --> C[salud=0, tomadas=0, heap=[]]
+C --> D[Para cada poción]
+D --> E[Leer valor]
+E --> F[salud += valor; tomadas += 1]
+F --> G{¿valor &lt; 0?}
+G -- Sí --> H[push en heap]
+G -- No --> I
+H --> I{¿salud &lt; 0?}
+I -- Sí --> J[pop peor negativa]
+J --> K[Revertir efecto y tomadas--]
+K --> L
+I -- No --> L{¿quedan pociones?}
+L -- Sí --> D
+L -- No --> M[Imprimir tomadas]
+M --> Z[Fin]</pre>
+    <div class="status"></div>
+  </div>
+
+  <div class="card" id="diag-m">
+    <div class="top"><h3>M - 7.13 (1).py</h3><button onclick="downloadDiagram('diag-m','M-7.13.png')">Descargar PNG</button></div>
+    <pre class="mermaid">flowchart TD
+A[Inicio] --> B[Leer n y acciones]
+B --> C[hotel[10]=0, p=0]
+C --> D{¿p &lt; n?}
+D -- No --> E[Imprimir estado hotel]
+E --> Z[Fin]
+D -- Sí --> F[accion = acciones[p]]
+F --> G{¿accion='L'?}
+G -- Sí --> H[Ocupar libre izq->der]
+H --> I[p++]
+G -- No --> J{¿accion='R'?}
+J -- Sí --> K[Ocupar libre der->izq]
+K --> I
+J -- No --> L[Liberar habitación digitada]
+L --> I
+I --> D</pre>
+    <div class="status"></div>
+  </div>
+
+  <div class="card" id="diag-o">
+    <div class="top"><h3>O - 8.15 (1).py</h3><button onclick="downloadDiagram('diag-o','O-8.15.png')">Descargar PNG</button></div>
+    <pre class="mermaid">flowchart TD
+A[Inicio] --> B[Leer n por tokens]
+B --> C{¿fin o n=0?}
+C -- Sí --> Z[Imprimir salidas y fin]
+C -- No --> D[Leer n números]
+D --> E[heapify]
+E --> F[costo=0]
+F --> G{¿heap con >1 elemento?}
+G -- Sí --> H[pop dos mínimos]
+H --> I[suma = a+b]
+I --> J[costo += suma]
+J --> K[push suma]
+K --> G
+G -- No --> L[guardar costo]
+L --> B</pre>
+    <div class="status"></div>
+  </div>
+
+  <div class="card" id="diag-p">
+    <div class="top"><h3>P - 8.16 (1).py</h3><button onclick="downloadDiagram('diag-p','P-8.16.png')">Descargar PNG</button></div>
+    <pre class="mermaid">flowchart TD
+A[Inicio] --> B[Leer t casos]
+B --> C[Para cada caso]
+C --> D[Leer n y crear resultado]
+D --> E[Heap de segmentos inicial]
+E --> F[Para i=1..n]
+F --> G[pop segmento más largo]
+G --> H[calcular mid]
+H --> I[resultado[mid]=i]
+I --> J{¿hay subsegmento izq?}
+J -- Sí --> K[push izq]
+J -- No --> L
+K --> L{¿hay subsegmento der?}
+L -- Sí --> M[push der]
+L -- No --> N
+M --> N{¿sigue i?}
+N -- Sí --> F
+N -- No --> O[guardar respuesta caso]
+O --> P{¿quedan casos?}
+P -- Sí --> C
+P -- No --> Q[imprimir todas]
+Q --> Z[Fin]</pre>
+    <div class="status"></div>
+  </div>
+
+</body>
+</html>

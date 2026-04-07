@@ -1,0 +1,25 @@
+flowchart TD
+    A[Inicio] --> B[Leer tokens]
+    B --> C{¿Hay entrada?}
+    C -- No --> Z[Fin]
+    C -- Sí --> D[Leer t_casos]
+    D --> E[Inicializar respuestas_finales]
+    E --> F{¿Quedan casos?}
+    F -- No --> Y[Imprimir todas las respuestas]
+    Y --> Z
+    F -- Sí --> G[Leer n y crear resultado de tamaño n]
+    G --> H[Inicializar heap con segmento total (-n,0,n-1)]
+    H --> I[Para i=1..n]
+    I --> J[pop segmento más largo (y más a la izquierda)]
+    J --> K[Calcular mid según longitud par/impar]
+    K --> L[resultado[mid] = i]
+    L --> M{¿Hay subsegmento izquierdo?}
+    M -- Sí --> N[push subsegmento izquierdo]
+    M -- No --> O
+    N --> O{¿Hay subsegmento derecho?}
+    O -- Sí --> P[push subsegmento derecho]
+    O -- No --> Q
+    P --> Q{¿Sigue i?}
+    Q -- Sí --> I
+    Q -- No --> R[Agregar resultado del caso a respuestas_finales]
+    R --> F
